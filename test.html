@@ -104,15 +104,16 @@
 			markers.push({
 			svgPath: circle,
 		      positionOnLine: 0,
-		      color: "#FF0000",
-		      alpha: 0.5,
+		      color: "green",
+		      alpha: 0.8,
 		      animateAlongLine: pipeList[j].status,
-		      animationDuration: normVal/(pipeList[j].flowrate*pipeList[j].performance),
+		      animationDuration: 0,
 		      lineId: pipeList[j].ID,
 		      flipDirection: true,
 		      loop: true,
 		      scale: 0.3,
-		      positionScale: 1
+		      positionScale: 1,
+		      positionOnLine: 0.5
 			});
 		}
 			
@@ -201,7 +202,6 @@
 			
 			pipeLines[pipeID].status = false;
 			pipeLines[pipeID].validate();
-
 		}
 		else if (dice_1 === 5){
 			console.log(dice_1);
