@@ -28,7 +28,24 @@
 	var markerScale = 0.5;
 	// svg path for target icon
 	var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
-	var circle = "M10 10 h 30 v 30 h -30 Z";
+	function draw()
+	{
+	 var canvas = document.getElementById('circle');
+	   if (canvas.getContext)
+	     {
+	      var ctx = canvas.getContext('2d');  
+	      var X = canvas.width / 2;
+	      var Y = canvas.height / 2;
+	      var R = 45;
+	      ctx.beginPath();
+	      ctx.arc(X, Y, R, 0, 2 * Math.PI, false);
+	      ctx.lineWidth = 3;
+	      ctx.strokeStyle = '#oo0000';
+	      ctx.stroke();
+	       ctx.fillStyle = 'green';
+	       ctx.fill();
+	      }
+	 }
 	
 	var citys = [
 					/*0*/[35.3332586,-119.169785, 'Bakersfield, CA'], 
@@ -69,6 +86,9 @@
 		//Los Angeles to San Franisco
 		{ID: 'C22', LatArray: [citys[1][0], citys[14][0]], LonArray: [citys[1][1], citys[14][1]], status: true, performance: 1, flowrate: 425}
 	];
+	var green = '#42f44b';
+	var red = '#FF0000';
+	var yellow = '#ffff00'
 	function createLines(pipeList){
 		var pipeLines=[];
 		//Create Markers object for each city
@@ -76,8 +96,9 @@
 			pipeLines.push( {
 		      id: pipeList[i].ID,
 		      arc: 0,
+		      thickness: 2,
 		      alpha: 0.3,
-		      color: "#0f0f00",
+		      color: green,
 		      latitudes: pipeList[i].LatArray,
 		      longitudes: pipeList[i].LonArray
 	    
@@ -88,7 +109,7 @@
 	var pipeLines = createLines(pipeRelationships);
 	function createMarkers(citys, pipeList){
 		var markers=[];
-		var normVal = 1000;
+		
 		//Create Markers object for each city
 		for (var i=0; i< citys.length ; i++){
 			markers.push( {
@@ -100,9 +121,19 @@
 		      scale: 0.5
 		    } );
 		}
+			
+		return markers;
+	}
+	var markers = createMarkers(citys, pipeRelationships);
+	//Create animations
+	function createAnimation(pipeList){
+		var animations = [];
+		var normVal = 1000;
+
+		//Create Animations for each pipeLine
 		for (var j = 0; j< pipeList.length; j++) {
-			markers.push({
-			svgPath: circle,
+			animations.push({
+			svgPath: targetSVG,
 		      positionOnLine: 0,
 		      color: "green",
 		      alpha: 0.8,
@@ -117,10 +148,10 @@
 			});
 		}
 			
-		return markers;
+		return animations;
 	}
-	var markers = createMarkers(citys, pipeRelationships);
-	//Create animations
+	var animations = createAnimation(pipeRelationships);
+	//var totalImg = ;
 	AmCharts.makeChart( "mapdiv", {
 	  type: "map",
 	  
@@ -136,7 +167,7 @@
         "zoomLevel": 5,
         "zoomLongitude": -95,
         "zoomLatitude": 40,
-        images: markers,
+        images: markers.concat(animations),
         lines: pipeLines
         
     },
@@ -146,9 +177,9 @@
       // Get the object
       
       //Roll the Dice
-	window.setInterval(function(pipeLines){
+	window.setInterval(function(){
 
-						randomAction(pipeLines); 
+						randomAction(); 
 						}, 3000);
   	}
   	}]
@@ -167,41 +198,69 @@
 
 	}
 	//A function that rolls a dice(s). The value determines which action occurs.
-	function randomAction(e){
+	function randomAction(){
 		var diceFaces = 6;
-		var dice_1 = 4;// Math.floor(Math.random() * diceFaces + 1);
+		var dice_1 = Math.floor(Math.random() * diceFaces + 1);
 
 		if(dice_1 === 1){
 			//Increase Flow rate of a random pipe by 10%
 			console.log(dice_1);
 			var pipeID = randomPipeID();
-			pipeRelationships[pipeID].performance = 1.1;
-			console.log( 'ID ' + pipeID + ' ' + pipeRelationships[pipeID].performance);
-			window.setTimeout(function(){ pipeRelationships[pipeID].performance = 1; }, 2900);
+			pipeLines[pipeID].performance = 1.1;
+			pipeLines[pipeID].validate();
+			
+			window.setTimeout(function(){ 
+				pipeLines[pipeID].performance = 1; 
+				pipeLines[pipeID].validate();
+			}, 2900);
 
 		}
 		else if (dice_1 === 2){
 			console.log(dice_1);
 			//Increase flow rate of a random pipe by 15%
 			var pipeID = randomPipeID();
-			pipeRelationships[pipeID].performance = 1.15;
-			window.setTimeout(function(){ pipeRelationships[pipeID].performance = 1; }, 2900);
+			pipeLines[pipeID].performance = 1.15;
+			pipeLines[pipeID].validate();
+			
+			window.setTimeout(function(){ 
+				pipeLines[pipeID].performance = 1; 
+				pipeLines[pipeID].validate();
+			}, 2900);
 		}
 		else if (dice_1 === 3){
 			console.log(dice_1);
 			//Decrease flow rate of a pipe by 20%
 			var pipeID = randomPipeID();
-			pipeRelationships[pipeID].performance = 0.8;
-			window.setTimeout(function(){ pipeRelationships[pipeID].performance = 1; }, 2900);
+			pipeLines[pipeID].performance = 0.8;
+			pipeLines[pipeID].color = yellow;
+			pipeLines[pipeID].validate();
+
+			window.setTimeout(function(){ 
+				pipeLines[pipeID].performance = 1; 
+				pipeLines[pipeID].validate();
+			}, 2900);
 		}
 		else if (dice_1 === 4){
 			console.log(dice_1);
 			//Turn a pipe off
 			var pipeID = randomPipeID();
-			console.log(pipeRelationships[pipeID].ID);
-			
-			pipeLines[pipeID].status = false;
+
+			pipeLines[pipeID].color = red;
+			animations[pipeID].animateAlongLine = false;
+
+			animations[pipeID].validate(); 
 			pipeLines[pipeID].validate();
+<<<<<<< HEAD
+=======
+
+			window.setTimeout(function(){ 
+				animations[pipeID].animateAlongLine = true; 
+				pipeLines[pipeID].color = green; 
+				animations[pipeID].validate(); 
+				pipeLines[pipeID].validate()
+			}, 10000);
+
+>>>>>>> 7d1b7daa8be60712a9815d79adbf3f9f093a8f91
 		}
 		else if (dice_1 === 5){
 			console.log(dice_1);
@@ -212,7 +271,17 @@
 			console.log(dice_1);
 			//Decrease flow rate of a pipe by 50%
 			var pipeID = randomPipeID();
-			pipeRelationships[pipeID].performance = 0.5;
+			pipeLines[pipeID].performance = 0.5;
+			pipeLines[pipeID].color = yellow;
+
+			pipeLines[pipeID].validate();
+
+			window.setTimeout(function(){ 
+				animations[pipeID].animateAlongLine = true; 
+				pipeLines[pipeID].color = green; 
+				animations[pipeID].validate(); 
+				pipeLines[pipeID].validate()
+			}, 10000);
 		}
 	}
 	
