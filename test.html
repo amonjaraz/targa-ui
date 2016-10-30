@@ -28,12 +28,7 @@
 	// svg path for target icon
 	var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
 
-	var normVal = 1000;
-/*	var pipes = [
-		{name: 'C11', latA: bakersfieldLatLng[0], lonA: bakersfieldLatLng[1], latB: losAngelesLatLng[0], lonB: losAngelesLatLng[1], status: true, performance: 1, flowrate: 800},
-		{name: 'C12', latA: chicagoLatLng[0], lonA: chicagoLatLng[1], latB: cushingLatLng[0], lonB: cushingLatLng[1], status: true, performance: 1, flowrate: 500},
-		{name: 'C13', latA: clearbrookLatLng[0], lonA: clearbrookLatLng[1], latB: mineapolisLatLng[0], lonB: mineapolisLatLng[1], status: true, performance: 1, flowrate: 100}
-	];*/
+
 	
 	var citys = [
 					[35.3332586,-119.169785, 'Bakersfield'], 
@@ -68,8 +63,9 @@
 	}
 	var pipeLines = createLines(pipeRelationships);
 
-	function createMarkers(citys){
+	function createMarkers(citys, pipeList){
 		var markers=[];
+		var normVal = 1000;
 		//Create Markers object for each city
 		for (var i=0; i< citys.length ; i++){
 			markers.push( {
@@ -82,9 +78,25 @@
 
 		    } );
 		}
+		for (var j = 0; j< pipeList.length; j++) {
+			markers.push({
+			svgPath: targetSVG,
+		      positionOnLine: 0,
+		      color: "#FF0000",
+		      alpha: 0.5,
+		      animateAlongLine: pipeList[j].status,
+		      animationDuration: normVal/(pipeList[j].flowrate*pipeList[j].performance),
+		      lineId: pipeList[j].ID,
+		      flipDirection: true,
+		      loop: true,
+		      scale: 0.3,
+		      positionScale: 1
+			});
+		}
+			
 		return markers;
 	}
-	var markers = createMarkers(citys);
+	var markers = createMarkers(citys, pipeRelationships);
 	//Create animations
 
 
