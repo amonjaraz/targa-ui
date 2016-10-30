@@ -69,7 +69,7 @@
 		//Los Angeles to San Franisco
 		{ID: 'C22', LatArray: [citys[1][0], citys[14][0]], LonArray: [citys[1][1], citys[14][1]], status: true, performance: 1, flowrate: 425}
 	];
-	var green = '#42f44b';
+	var green = '#228B22';
 	var red = '#FF0000';
 	var yellow = '#ffff00'
 	function createLines(pipeList){
@@ -118,7 +118,7 @@
 			animations.push({
 			svgPath: circle,
 		      positionOnLine: 0,
-		      color: "green",
+		      color: green,
 		      alpha: 0.5,
 		      animateAlongLine: pipeList[j].status,
 		      animationDuration: normVal/(pipeList[j].flowrate*pipeList[j].performance),
@@ -162,7 +162,7 @@
 	window.setInterval(function(){
 
 						randomAction(); 
-						}, 3000);
+						}, 30000);
   	}
   	}]
 
@@ -194,7 +194,7 @@
 			window.setTimeout(function(){ 
 				pipeLines[pipeID].performance = 1; 
 				pipeLines[pipeID].validate();
-			}, 2900);
+			}, 29000);
 
 		}
 		else if (dice_1 === 2){
@@ -207,20 +207,25 @@
 			window.setTimeout(function(){ 
 				pipeLines[pipeID].performance = 1; 
 				pipeLines[pipeID].validate();
-			}, 2900);
+			}, 29000);
 		}
 		else if (dice_1 === 3){
 			console.log(dice_1);
 			//Decrease flow rate of a pipe by 20%
 			var pipeID = randomPipeID();
 			pipeLines[pipeID].performance = 0.8;
+			animations[pipeID].color = yellow;
 			pipeLines[pipeID].color = yellow;
+			animations[pipeID].validate();
 			pipeLines[pipeID].validate();
 
 			window.setTimeout(function(){ 
-				pipeLines[pipeID].performance = 1; 
+				pipeLines[pipeID].performance = 1;
+				pipeLines[pipeID].color = green; 
+				animations[pipeID].color = green;
+				animations[pipeID].validate();
 				pipeLines[pipeID].validate();
-			}, 2900);
+			}, 29000);
 		}
 		else if (dice_1 === 4){
 			console.log(dice_1);
@@ -228,6 +233,7 @@
 			var pipeID = randomPipeID();
 
 			pipeLines[pipeID].color = red;
+			animations[pipeID].color = red;
 			animations[pipeID].animateAlongLine = false;
 
 			animations[pipeID].validate(); 
@@ -236,9 +242,10 @@
 			window.setTimeout(function(){ 
 				animations[pipeID].animateAlongLine = true; 
 				pipeLines[pipeID].color = green; 
+				animations[pipeID].color = green;
 				animations[pipeID].validate(); 
 				pipeLines[pipeID].validate()
-			}, 10000);
+			}, 29000);
 
 		}
 		else if (dice_1 === 5){
@@ -252,15 +259,17 @@
 			var pipeID = randomPipeID();
 			pipeLines[pipeID].performance = 0.5;
 			pipeLines[pipeID].color = yellow;
+			animations[pipeID].color = yellow;
 
+			animations[pipeID].validate(); 
 			pipeLines[pipeID].validate();
 
 			window.setTimeout(function(){ 
-				animations[pipeID].animateAlongLine = true; 
+				animations[pipeID].color = green; 
 				pipeLines[pipeID].color = green; 
 				animations[pipeID].validate(); 
 				pipeLines[pipeID].validate()
-			}, 10000);
+			}, 29000);
 		}
 	}
 	
