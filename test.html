@@ -20,6 +20,7 @@
 	<div id="mapdiv" style="width: 100%; height: 100%;"></div>
 
 
+
 	<script type="text/javascript">
 	/**
 	 * Let's put an SVG icon into a variable so that we can reuse it for multiple markers
@@ -78,6 +79,7 @@
 		for (var i=0; i< pipeList.length ; i++){
 			pipeLines.push( {
 		      id: pipeList[i].ID,
+		      title: pipeRelationships[i].flowrate*pipeRelationships[i].performance + ' barrels/day',
 		      arc: 0,
 		      thickness: 2,
 		      alpha: 0.3,
@@ -109,9 +111,10 @@
 	}
 	var markers = createMarkers(citys, pipeRelationships);
 	//Create animations
+	var normVal = 1000;
 	function createAnimation(pipeList){
 		var animations = [];
-		var normVal = 1000;
+		
 
 		//Create Animations for each pipeLine
 		for (var j = 0; j< pipeList.length; j++) {
@@ -162,7 +165,7 @@
 	window.setInterval(function(){
 
 						randomAction(); 
-						}, 30000);
+						}, 3000);
   	}
   	}]
 
@@ -188,44 +191,64 @@
 			//Increase Flow rate of a random pipe by 10%
 			console.log(dice_1);
 			var pipeID = randomPipeID();
-			pipeLines[pipeID].performance = 1.1;
+			pipeRelationships[pipeID].performance = 0.1;
+			pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
+			animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
+
+			animations[pipeID].validate();
 			pipeLines[pipeID].validate();
 			
 			window.setTimeout(function(){ 
-				pipeLines[pipeID].performance = 1; 
+				pipeRelationships[pipeID].performance = 1;
+				pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
+				animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 				pipeLines[pipeID].validate();
-			}, 29000);
+				animations[pipeID].validate();
+			}, 2900);
 
 		}
 		else if (dice_1 === 2){
 			console.log(dice_1);
 			//Increase flow rate of a random pipe by 15%
 			var pipeID = randomPipeID();
-			pipeLines[pipeID].performance = 1.15;
+			pipeRelationships[pipeID].performance = 0.1;
+			pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
+			animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
+
+			animations[pipeID].validate();
 			pipeLines[pipeID].validate();
 			
 			window.setTimeout(function(){ 
-				pipeLines[pipeID].performance = 1; 
+				pipeRelationships[pipeID].performance = 1;
+				pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
+				animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 				pipeLines[pipeID].validate();
-			}, 29000);
+				animations[pipeID].validate();
+			}, 2900);
 		}
 		else if (dice_1 === 3){
 			console.log(dice_1);
 			//Decrease flow rate of a pipe by 20%
 			var pipeID = randomPipeID();
-			pipeLines[pipeID].performance = 0.8;
+			pipeRelationships[pipeID].performance = 0.1;
+			pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
+			animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 			animations[pipeID].color = yellow;
 			pipeLines[pipeID].color = yellow;
+
 			animations[pipeID].validate();
 			pipeLines[pipeID].validate();
 
 			window.setTimeout(function(){ 
-				pipeLines[pipeID].performance = 1;
+				pipeRelationships[pipeID].performance = 1;
+				pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
+				animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 				pipeLines[pipeID].color = green; 
 				animations[pipeID].color = green;
+
 				animations[pipeID].validate();
 				pipeLines[pipeID].validate();
-			}, 29000);
+			}, 2900);
 		}
 		else if (dice_1 === 4){
 			console.log(dice_1);
@@ -233,6 +256,9 @@
 			var pipeID = randomPipeID();
 
 			pipeLines[pipeID].color = red;
+			pipeRelationships[pipeID].performance = 0;
+			pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
+			animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 			animations[pipeID].color = red;
 			animations[pipeID].animateAlongLine = false;
 
@@ -243,9 +269,13 @@
 				animations[pipeID].animateAlongLine = true; 
 				pipeLines[pipeID].color = green; 
 				animations[pipeID].color = green;
+				pipeRelationships[pipeID].performance = 1;
+				pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
+				animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
+
 				animations[pipeID].validate(); 
 				pipeLines[pipeID].validate()
-			}, 29000);
+			}, 2900);
 
 		}
 		else if (dice_1 === 5){
@@ -257,19 +287,25 @@
 			console.log(dice_1);
 			//Decrease flow rate of a pipe by 50%
 			var pipeID = randomPipeID();
-			pipeLines[pipeID].performance = 0.5;
+			pipeLines[pipeID].performance = 0.1;
+			pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
+			animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 			pipeLines[pipeID].color = yellow;
 			animations[pipeID].color = yellow;
 
 			animations[pipeID].validate(); 
 			pipeLines[pipeID].validate();
 
-			window.setTimeout(function(){ 
+			window.setTimeout(function(){pipeID
 				animations[pipeID].color = green; 
-				pipeLines[pipeID].color = green; 
+				pipeLines[pipeID].color = green;
+				pipeRelationships[pipeID].performance = 1;
+				pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
+				animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
+
 				animations[pipeID].validate(); 
 				pipeLines[pipeID].validate()
-			}, 29000);
+			}, 2900);
 		}
 	}
 	
