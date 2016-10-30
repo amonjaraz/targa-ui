@@ -16,8 +16,11 @@
 
 </head>
 
-<body>
+<body onload="draw(), draw1(), draw2();">
 	<div id="mapdiv" style="width: 100%; height: 100%;"></div>
+	<canvas id="greenCircle" width="10" height="10"></canvas>
+	<canvas id="redCircle" width="10" height="10"></canvas>
+	<canvas id="yellowCircle" width="10" height="10"></canvas>
 
 
 	<script type="text/javascript">
@@ -30,7 +33,7 @@
 	var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
 	function draw()
 	{
-	 var canvas = document.getElementById('circle');
+	 var canvas = document.getElementById('greenCircle');
 	   if (canvas.getContext)
 	     {
 	      var ctx = canvas.getContext('2d');  
@@ -40,14 +43,48 @@
 	      ctx.beginPath();
 	      ctx.arc(X, Y, R, 0, 2 * Math.PI, false);
 	      ctx.lineWidth = 3;
-	      ctx.strokeStyle = '#oo0000';
+	      ctx.strokeStyle = '#000000';
 	      ctx.stroke();
 	       ctx.fillStyle = 'green';
 	       ctx.fill();
 	      }
 	 }
-
-
+	function draw1()
+	{
+	 var canvas = document.getElementById('redCircle');
+	   if (canvas.getContext)
+	     {
+	      var ctx = canvas.getContext('2d');  
+	      var X = canvas.width / 2;
+	      var Y = canvas.height / 2;
+	      var R = 45;
+	      ctx.beginPath();
+	      ctx.arc(X, Y, R, 0, 2 * Math.PI, false);
+	      ctx.lineWidth = 3;
+	      ctx.strokeStyle = '#000000';
+	      ctx.stroke();
+	       ctx.fillStyle = 'red';
+	       ctx.fill();
+	      }
+	 }
+	function draw2()
+	{
+	 var canvas = document.getElementById('yellowCircle');
+	   if (canvas.getContext)
+	     {
+	      var ctx = canvas.getContext('2d');  
+	      var X = canvas.width / 2;
+	      var Y = canvas.height / 2;
+	      var R = 45;
+	      ctx.beginPath();
+	      ctx.arc(X, Y, R, 0, 2 * Math.PI, false);
+	      ctx.lineWidth = 3;
+	      ctx.strokeStyle = '#000000';
+	      ctx.stroke();
+	       ctx.fillStyle = 'yellow';
+	       ctx.fill();
+	      }
+	 }
 	
 	var citys = [
 					/*0*/[35.3332586,-119.169785, 'Bakersfield, CA'], 
