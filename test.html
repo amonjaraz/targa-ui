@@ -1,0 +1,116 @@
+<html>
+<head>
+	<title>bigBusiness</title>
+
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://www.amcharts.com/lib/3/ammap.css" type="text/css" media="all" />
+	<script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+	<script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+
+	<style type="text/css">
+		#mapdiv {
+		  background: #eee;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div id="mapdiv" style="width: 600px; height: 400px;"></div>
+
+	<script type="text/javascript">
+	/**
+	 * Let's put an SVG icon into a variable so that we can reuse it for multiple markers
+	 */
+	var icon= "M21.25,8.375V28h6.5V8.375H21.25zM12.25,28h6.5V4.125h-6.5V28zM3.25,28h6.5V12.625h-6.5V28z";
+	var markerScale = 0.5;
+	// svg path for target icon
+	var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+
+	var normVal = 1000;
+/*	var pipes = [
+		{name: 'C11', latA: bakersfieldLatLng[0], lonA: bakersfieldLatLng[1], latB: losAngelesLatLng[0], lonB: losAngelesLatLng[1], status: true, performance: 1, flowrate: 800},
+		{name: 'C12', latA: chicagoLatLng[0], lonA: chicagoLatLng[1], latB: cushingLatLng[0], lonB: cushingLatLng[1], status: true, performance: 1, flowrate: 500},
+		{name: 'C13', latA: clearbrookLatLng[0], lonA: clearbrookLatLng[1], latB: mineapolisLatLng[0], lonB: mineapolisLatLng[1], status: true, performance: 1, flowrate: 100}
+	];*/
+	
+	var citys = [
+					[35.3332586,-119.169785, 'Bakersfield'], 
+					[34.0203662,-118.9722372, 'LosAngeles'], 
+					[41.8339043,-88.0123523, 'Chicago'], 
+					[35.7902527,-97.6355324, 'Cushing'],
+					[46.818522,-100.4834652, 'ClearBrook'],
+					[44.9708543,-93.401565, 'Mineapolis']
+
+				];
+	var pipeRelationships = [
+		{ID: 'C11', LatArray: [citys[0][0], citys[1][0]], LonArray: [citys[0][1], citys[1][1]], status: true, performance: 1, flowrate: 800},
+		{ID: 'C12', LatArray: [citys[2][0], citys[3][0]], LonArray: [citys[2][1], citys[3][1]], status: true, performance: 1, flowrate: 800},
+		{ID: 'C13', LatArray: [citys[4][0], citys[5][0]], LonArray: [citys[4][1], citys[5][1]], status: true, performance: 1, flowrate: 800}
+	];
+
+	function createLines(pipeList){
+		var pipeLines=[];
+		//Create Markers object for each city
+		for (var i=0; i< pipeList.length ; i++){
+			pipeLines.push( {
+		      id: pipeList[i].ID,
+		      arc: 0,
+		      alpha: 0.3,
+		      color: "#0f0f00",
+		      latitudes: pipeList[i].LatArray,
+		      longitudes: pipeList[i].LonArray
+	    
+		    } );
+		}
+		return pipeLines;
+	}
+	var pipeLines = createLines(pipeRelationships);
+
+	function createMarkers(citys){
+		var markers=[];
+		//Create Markers object for each city
+		for (var i=0; i< citys.length ; i++){
+			markers.push( {
+		      id: citys[i][2],
+		      svgPath: targetSVG,
+		      title: citys[i][2],
+		      latitude: citys[i][0],
+		      longitude: citys[i][1],
+		      scale: 0.5
+
+		    } );
+		}
+		return markers;
+	}
+	var markers = createMarkers(citys);
+	//Create animations
+
+
+	AmCharts.makeChart( "mapdiv", {
+	  type: "map",
+	  
+	  dataProvider: {
+	    "map": "worldLow",
+	    "id": "vilnius",
+        "color": "#000000",
+        "svgPath": targetSVG,
+        "title": "Vilnius",
+        "latitude": 54.6896,
+        "longitude": 25.2799,
+        "scale": 1.5,
+        "zoomLevel": 5,
+        "zoomLongitude": -95,
+        "zoomLatitude": 40,
+        images: markers,
+        lines: pipeLines
+        
+    }
+
+
+	} );
+
+	</script>
+</body>
+</html>

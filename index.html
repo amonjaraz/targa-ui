@@ -1,0 +1,194 @@
+<html>
+<head>
+	<title>bigBusiness</title>
+
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://www.amcharts.com/lib/3/ammap.css" type="text/css" media="all" />
+	<script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+	<script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+
+	<style type="text/css">
+		#mapdiv {
+		  background: #eee;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div id="mapdiv" style="width: 600px; height: 400px;"></div>
+
+	<script type="text/javascript">
+	/**
+	 * Let's put an SVG icon into a variable so that we can reuse it for multiple markers
+	 */
+	var icon= "M21.25,8.375V28h6.5V8.375H21.25zM12.25,28h6.5V4.125h-6.5V28zM3.25,28h6.5V12.625h-6.5V28z";
+	var houstonLatLng = [29.7604, -95.3698];
+	var sanAntonioLatLng = [29.4241, -98.4936];
+
+	var bakersfieldLatLng = [35.3332586,-119.169785, 'Bakersfieldld'];
+	var losAngelesLatLng = [34.0203662,-118.9722372, 'LosAngeles'];
+	var chicagoLatLng = [41.8339043,-88.0123523, 'Chicago'];
+	var cushingLatLng = [35.7902527,-97.6355324, 'Cushing'];
+	var clearbrookLatLng = [46.818522,-100.4834652, 'ClearBrook'];
+	var mineapolisLatLng = [44.9708543,-93.401565, 'Mineapolis'];
+
+	console.log(losAngelesLatLng[2]);
+
+
+	var normVal = 1000;
+	var pipes = [
+		{name: 'C11', latA: bakersfieldLatLng[0], lonA: bakersfieldLatLng[1], latB: losAngelesLatLng[0], lonB: losAngelesLatLng[1], status: true, performance: 1, flowrate: 800},
+		{name: 'C12', latA: chicagoLatLng[0], lonA: chicagoLatLng[1], latB: cushingLatLng[0], lonB: cushingLatLng[1], status: true, performance: 1, flowrate: 500},
+		{name: 'C13', latA: clearbrookLatLng[0], lonA: clearbrookLatLng[1], latB: mineapolisLatLng[0], lonB: mineapolisLatLng[1], status: true, performance: 1, flowrate: 100}
+	];
+
+	var markerScale = 0.5;
+	// svg path for target icon
+	var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+
+	AmCharts.makeChart( "mapdiv", {
+	  type: "map",
+	  
+	  dataProvider: {
+	    "map": "worldLow",
+	    "id": "vilnius",
+        "color": "#000000",
+        "svgPath": targetSVG,
+        "title": "Vilnius",
+        "latitude": 54.6896,
+        "longitude": 25.2799,
+        "scale": 1.5,
+        "zoomLevel": 5,
+        "zoomLongitude": -95,
+        "zoomLatitude": 40,
+
+	    images: [ {
+	      id: bakersfieldLatLng[2],
+	      svgPath: targetSVG,
+	      title: bakersfieldLatLng[2],
+	      latitude: bakersfieldLatLng[0],
+	      longitude: bakersfieldLatLng[1],
+	      scale: markerScale
+
+	    },
+	    {
+	      id: losAngelesLatLng[2],
+	      svgPath: targetSVG,
+	      title: losAngelesLatLng[2],
+	      latitude: losAngelesLatLng[0],
+	      longitude: losAngelesLatLng[1],
+	      scale: markerScale
+
+	    },
+	    {
+	      id: chicagoLatLng[2],
+	      svgPath: targetSVG,
+	      title: chicagoLatLng[2],
+	      latitude: chicagoLatLng[0],
+	      longitude: chicagoLatLng[1],
+	      scale: markerScale
+
+	    },
+	    {
+	      id: cushingLatLng[2],
+	      svgPath: targetSVG,
+	      title: cushingLatLng[2],
+	      latitude: cushingLatLng[0],
+	      longitude: cushingLatLng[1],
+	      scale: markerScale
+
+	    },
+	    {
+	      id: clearbrookLatLng[2],
+	      svgPath: targetSVG,
+	      title: clearbrookLatLng[2],
+	      latitude: clearbrookLatLng[0],
+	      longitude: clearbrookLatLng[1],
+	      scale: markerScale
+
+	    },
+	    {
+	      id: mineapolisLatLng[2],
+	      svgPath: targetSVG,
+	      title: mineapolisLatLng[2],
+	      latitude: mineapolisLatLng[0],
+	      longitude: mineapolisLatLng[1],
+	      scale: markerScale
+
+	    },
+	    //Animation
+	    {
+	      svgPath: targetSVG,
+	      positionOnLine: 0,
+	      color: "#FF0000",
+	      alpha: 0.5,
+	      animateAlongLine: pipes[0].status,
+	      animationDuration: normVal/(pipes[0].flowrate*pipes[0].performance),
+	      lineId: pipes[0].name,
+	      flipDirection: true,
+	      loop: true,
+	      scale: 0.3,
+	      positionScale: 1
+    	},
+    	{
+	      svgPath: targetSVG,
+	      positionOnLine: 0,
+	      color: "#FF0000",
+	      alpha: 0.5,
+	      animateAlongLine: pipes[1].status,
+	      animationDuration: normVal/(pipes[1].flowrate*pipes[1].performance),
+	      lineId: pipes[1].name,
+	      flipDirection: true,
+	      loop: true,
+	      scale: 0.3,
+	      positionScale: 1
+    	},
+    	{
+	      svgPath: targetSVG,
+	      positionOnLine: 0,
+	      color: "#000000",
+	      alpha: 0.5,
+	      animateAlongLine: pipes[2].status,
+	      animationDuration: normVal/(pipes[2].flowrate*pipes[2].performance),
+	      lineId: pipes[2].name,
+	      flipDirection: true,
+	      loop: true,
+	      scale: 0.3,
+	      positionScale: 1
+    	}
+     ],
+     //Lines
+		lines: [ {
+	      id: pipes[0].name,
+	      arc: 0,
+	      alpha: 0.3,
+	      color: "#0f0f00",
+	      latitudes: [ pipes[0].latA, pipes[0].latB ],
+	      longitudes: [ pipes[0].lonA, pipes[0].lonB]
+	    },
+	    {
+	      id: pipes[1].name,
+	      arc: 0,
+	      alpha: 0.3,
+	      color: "#0f0f00",
+	      latitudes: [ pipes[1].latA, pipes[1].latB ],
+	      longitudes: [ pipes[1].lonA, pipes[1].lonB]
+	    },
+	    {
+	      id: pipes[2].name,
+	      arc: 0,
+	      alpha: 0.3,
+	      color: "#0f0f00",
+	      latitudes: [ pipes[2].latA, pipes[2].latB ],
+	      longitudes: [ pipes[2].lonA, pipes[2].lonB]
+	    }
+	    ]
+	  }
+
+	} );
+
+	</script>
+</body>
+</html>
