@@ -18,6 +18,8 @@
 
 <body>
 	<div id="mapdiv" style="width: 100%; height: 100%;"></div>
+
+
 	<script type="text/javascript">
 	/**
 	 * Let's put an SVG icon into a variable so that we can reuse it for multiple markers
@@ -26,8 +28,25 @@
 	var markerScale = 0.5;
 	// svg path for target icon
 	var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
-	var circle = "M10 10 h 30 v 30 h -30 Z";
-
+	function draw()
+	{
+	 var canvas = document.getElementById('circle');
+	   if (canvas.getContext)
+	     {
+	      var ctx = canvas.getContext('2d');  
+	      var X = canvas.width / 2;
+	      var Y = canvas.height / 2;
+	      var R = 45;
+	      ctx.beginPath();
+	      ctx.arc(X, Y, R, 0, 2 * Math.PI, false);
+	      ctx.lineWidth = 3;
+	      ctx.strokeStyle = '#oo0000';
+	      ctx.stroke();
+	       ctx.fillStyle = 'green';
+	       ctx.fill();
+	      }
+	 }
+	
 	var citys = [
 					/*0*/[35.3332586,-119.169785, 'Bakersfield, CA'], 
 					/*1*/[34.0203662,-118.9722372, 'Los Angeles, CA'], 
@@ -67,7 +86,6 @@
 		//Los Angeles to San Franisco
 		{ID: 'C22', LatArray: [citys[1][0], citys[14][0]], LonArray: [citys[1][1], citys[14][1]], status: true, performance: 1, flowrate: 425}
 	];
-
 	function createLines(pipeList){
 		var pipeLines=[];
 		//Create Markers object for each city
@@ -85,7 +103,6 @@
 		return pipeLines;
 	}
 	var pipeLines = createLines(pipeRelationships);
-
 	function createMarkers(citys, pipeList){
 		var markers=[];
 		var normVal = 1000;
@@ -98,12 +115,11 @@
 		      latitude: citys[i][0],
 		      longitude: citys[i][1],
 		      scale: 0.5
-
 		    } );
 		}
 		for (var j = 0; j< pipeList.length; j++) {
 			markers.push({
-			svgPath: circle,
+			svgPath: targetSVG,
 		      positionOnLine: 0,
 		      color: "#FF0000",
 		      alpha: 0.5,
@@ -121,8 +137,6 @@
 	}
 	var markers = createMarkers(citys, pipeRelationships);
 	//Create animations
-
-
 	AmCharts.makeChart( "mapdiv", {
 	  type: "map",
 	  
@@ -141,11 +155,84 @@
         images: markers,
         lines: pipeLines
         
-    }
+    },
+    listeners: [{
+    "event": "init",
+    "method": function(e) {
+      // Get the object
+      
+      //Roll the Dice
+	window.setInterval(function(pipeLines){
 
+						randomAction(pipeLines); 
+						}, 3000);
+  	}
+  	}]
 
 	} );
 
+	//Pick a random pipe number
+	function randomPipeID(){
+		//using the number of pipes availabe, pick one
+		var maxPipeID = 10;
+		var randPipeID = Math.floor(Math.random() * maxPipeID );
+		return randPipeID;
+	}
+	function updatePipeFlow(pipeID , factor){
+		//Take the pipe ID and change it by the factor
+
+	}
+	//A function that rolls a dice(s). The value determines which action occurs.
+	function randomAction(e){
+		var diceFaces = 6;
+		var dice_1 = 4;// Math.floor(Math.random() * diceFaces + 1);
+
+		if(dice_1 === 1){
+			//Increase Flow rate of a random pipe by 10%
+			console.log(dice_1);
+			var pipeID = randomPipeID();
+			pipeRelationships[pipeID].performance = 1.1;
+			console.log( 'ID ' + pipeID + ' ' + pipeRelationships[pipeID].performance);
+			window.setTimeout(function(){ pipeRelationships[pipeID].performance = 1; }, 2900);
+
+		}
+		else if (dice_1 === 2){
+			console.log(dice_1);
+			//Increase flow rate of a random pipe by 15%
+			var pipeID = randomPipeID();
+			pipeRelationships[pipeID].performance = 1.15;
+			window.setTimeout(function(){ pipeRelationships[pipeID].performance = 1; }, 2900);
+		}
+		else if (dice_1 === 3){
+			console.log(dice_1);
+			//Decrease flow rate of a pipe by 20%
+			var pipeID = randomPipeID();
+			pipeRelationships[pipeID].performance = 0.8;
+			window.setTimeout(function(){ pipeRelationships[pipeID].performance = 1; }, 2900);
+		}
+		else if (dice_1 === 4){
+			console.log(dice_1);
+			//Turn a pipe off
+			var pipeID = randomPipeID();
+			console.log(pipeRelationships[pipeID].ID);
+			
+			pipeLines[pipeID].status = false;
+			pipeLines[pipeID].validate();
+
+		}
+		else if (dice_1 === 5){
+			console.log(dice_1);
+			//Open a ticket
+
+		}
+		else if (dice_1 === 6){
+			console.log(dice_1);
+			//Decrease flow rate of a pipe by 50%
+			var pipeID = randomPipeID();
+			pipeRelationships[pipeID].performance = 0.5;
+		}
+	}
+	
 	</script>
 </body>
 </html>
