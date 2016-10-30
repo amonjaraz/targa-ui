@@ -17,7 +17,7 @@
 </head>
 
 <body>
-	<div id="mapdiv" style="width: 600px; height: 400px;"></div>
+	<div id="mapdiv" style="width: 100%; height: 100%;"></div>
 
 	<script type="text/javascript">
 	/**
@@ -40,14 +40,16 @@
 					[34.0203662,-118.9722372, 'LosAngeles'], 
 					[41.8339043,-88.0123523, 'Chicago'], 
 					[35.7902527,-97.6355324, 'Cushing'],
-					[46.818522,-100.4834652, 'ClearBrook'],
-					[44.9708543,-93.401565, 'Mineapolis']
+					[47.6919,-95.4311, 'ClearBrook'],
+					[44.9708543,-93.401565, 'Mineapolis'],
+					[46.8083, -100.7837, 'Bismarck']
 
 				];
 	var pipeRelationships = [
 		{ID: 'C11', LatArray: [citys[0][0], citys[1][0]], LonArray: [citys[0][1], citys[1][1]], status: true, performance: 1, flowrate: 800},
 		{ID: 'C12', LatArray: [citys[2][0], citys[3][0]], LonArray: [citys[2][1], citys[3][1]], status: true, performance: 1, flowrate: 800},
-		{ID: 'C13', LatArray: [citys[4][0], citys[5][0]], LonArray: [citys[4][1], citys[5][1]], status: true, performance: 1, flowrate: 800}
+		{ID: 'C13', LatArray: [citys[4][0], citys[5][0]], LonArray: [citys[4][1], citys[5][1]], status: true, performance: 1, flowrate: 800},
+		{ID: 'C14', LatArray: [citys[4][0], citys[6][0]], LonArray: [citys[4][1], citys[6][1]], status: true, performance: 1, flowrate: 800}
 	];
 
 	function createLines(pipeList){
