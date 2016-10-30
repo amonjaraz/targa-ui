@@ -66,7 +66,7 @@
 			<button type="button" class="btn btn-primary btn-sm">Small button</button>
 			<button type="button" class="btn btn-primary btn-sm">Small button</button>
 			<button type="button" class="btn btn-primary btn-sm">Small button</button>
-			
+
 		</div>
 	</div>
 	<div class="col-md-6">
@@ -75,22 +75,23 @@
 </div>
 
 	<script type="text/javascript">
+
 	   $(document).ready(function(){
-      var i=1;
-     $("#add_row").click(function(){
-      $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  /> </td><td><input  name='mail"+i+"' type='text' placeholder='Mail'  class='form-control input-md'></td><td><input  name='mobile"+i+"' type='text' placeholder='Mobile'  class='form-control input-md'></td>");
+	      var i=1;
+	     $("#add_row").click(function(){
+	      $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  /> </td><td><input  name='mail"+i+"' type='text' placeholder='Mail'  class='form-control input-md'></td><td><input  name='mobile"+i+"' type='text' placeholder='Mobile'  class='form-control input-md'></td>");
 
-      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-      i++; 
-  });
-     $("#delete_row").click(function(){
-    	 if(i>1){
-		 $("#addr"+(i-1)).html('');
-		 i--;
-		 }
-	 });
+	      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+	      i++; 
+	  });
+	     $("#delete_row").click(function(){
+	    	 if(i>1){
+			 $("#addr"+(i-1)).html('');
+			 i--;
+			 }
+		 });
 
-});
+		});
 	/**
 	 * Let's put an SVG icon into a variable so that we can reuse it for multiple markers
 	 */
@@ -115,7 +116,17 @@
 					/*11*/[38.6270, -90.1994, 'St. Louis, MO'],
 					/*12*/[29.7604, -95.3698, 'Houston, TX'],
 					/*13*/[33.9137, -98.4934, 'Wichita Falls, TX'],
-					/*14*/[37.7749, -122.4194, 'San Francisco, CA']
+					/*14*/[37.7749, -122.4194, 'San Francisco, CA'],
+					/*15*/[31.9973, -102.0779, 'Midland, TX'],
+					/*16*/[27.8006, -97.3964, 'Corpus Christi, TX'],
+					/*17*/[35.6678, -101.3974, 'Borger, TX'],
+					/*18*/[43.3869, -98.8445, 'Platte, SD'],
+					/*19*/[29.8850, -93.9399, 'Port Arthur, TX'],
+					/*20*/[34.4208, -119.6982, 'Santa Barbara, CA'],
+					/*21*/[40.8754, -73.1527, 'St. James, NY'],
+					/*22*/[38.7553, -89.0953, 'Patoka, IL'],
+					/*23*/[40.7608, -111.8910, 'Salt Lake City, UT'],
+					/*24*/[47.6588, -117.4260, 'Spokane, WA']
 				];
 	var pipeRelationships = [
 		//Bakersfield to Los Angeles
@@ -137,7 +148,28 @@
 		//Houston to Wichita Falls
 		{ID: 'C20', LatArray: [citys[12][0], citys[13][0]], LonArray: [citys[12][1], citys[13][1]], status: true, performance: 1, flowrate: 800},
 		//Los Angeles to San Franisco
-		{ID: 'C22', LatArray: [citys[1][0], citys[14][0]], LonArray: [citys[1][1], citys[14][1]], status: true, performance: 1, flowrate: 425}
+		{ID: 'C22', LatArray: [citys[1][0], citys[14][0]], LonArray: [citys[1][1], citys[14][1]], status: true, performance: 1, flowrate: 425},
+		//Midland to Corpus Christi
+		{ID: 'C24', LatArray: [citys[15][0], citys[16][0]], LonArray: [citys[15][1], citys[16][1]], status: true, performance: 1, flowrate: 275},
+		//Midland to Cushing
+		{ID: 'C25', LatArray: [citys[15][0], citys[3][0]], LonArray: [citys[15][1], citys[3][1]], status: true, performance: 1, flowrate: 400},
+		//Midland to Borger
+		{ID: 'C26', LatArray: [citys[15][0], citys[17][0]], LonArray: [citys[15][1], citys[17][1]], status: true, performance: 1, flowrate: 150},
+		//Midland to Houston
+		{ID: 'C28', LatArray: [citys[15][0], citys[12][0]], LonArray: [citys[15][1], citys[12][1]], status: true, performance: 1, flowrate: 310},
+		//Minneapolis to St. Louis
+		{ID: 'C29', LatArray: [citys[5][0], citys[11][0]], LonArray: [citys[5][1], citys[11][1]], status: true, performance: 1, flowrate: 300},
+		//Platte to Wichita Falls
+		{ID: 'C32', LatArray: [citys[18][0], citys[13][0]], LonArray: [citys[18][1], citys[13][1]], status: true, performance: 1, flowrate: 425},
+		//Port Arthur to Midland
+		{ID: 'C33', LatArray: [citys[19][0], citys[15][0]], LonArray: [citys[19][1], citys[15][1]], status: true, performance: 1, flowrate: 125},
+		//Santa Barbara to Houston
+		{ID: 'C36', LatArray: [citys[20][0], citys[12][0]], LonArray: [citys[20][1], citys[12][1]], status: true, performance: 1, flowrate: 125},
+		//St. James to Patoka
+		{ID: 'C37', LatArray: [citys[21][0], citys[22][0]], LonArray: [citys[21][1], citys[22][1]], status: true, performance: 1, flowrate: 500},
+		//Salt Lake City to Spokane
+		{ID: 'C39', LatArray: [citys[23][0], citys[24][0]], LonArray: [citys[23][1], citys[24][1]], status: true, performance: 1, flowrate: 100},
+
 	];
 	var green = '#228B22';
 	var red = '#FF0000';
