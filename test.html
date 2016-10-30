@@ -267,7 +267,7 @@
 	window.setInterval(function(){
 
 						randomAction(); 
-						}, 30000);
+						}, 3000);
   	}
   	}]
 
@@ -287,7 +287,7 @@
 	//A function that rolls a dice(s). The value determines which action occurs.
 	function randomAction(){
 		var diceFaces = 6;
-		var dice_1 = Math.floor(Math.random() * diceFaces + 1);
+		var dice_1 =6;//Math.floor(Math.random() * diceFaces + 1);
 
 		if(dice_1 === 1){
 			//Increase Flow rate of a random pipe by 10%
@@ -306,7 +306,7 @@
 				animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 				pipeLines[pipeID].validate();
 				animations[pipeID].validate();
-			}, 29000);
+			}, 2900);
 
 		}
 		else if (dice_1 === 2){
@@ -326,7 +326,7 @@
 				animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 				pipeLines[pipeID].validate();
 				animations[pipeID].validate();
-			}, 29000);
+			}, 2900);
 		}
 		else if (dice_1 === 3){
 			console.log(dice_1);
@@ -350,7 +350,7 @@
 
 				animations[pipeID].validate();
 				pipeLines[pipeID].validate();
-			}, 29000);
+			}, 2900);
 		}
 		else if (dice_1 === 4){
 			console.log(dice_1);
@@ -377,7 +377,7 @@
 
 				animations[pipeID].validate(); 
 				pipeLines[pipeID].validate()
-			}, 29000);
+			}, 2900);
 
 		}
 		else if (dice_1 === 5){
@@ -389,7 +389,7 @@
 			console.log(dice_1);
 			//Decrease flow rate of a pipe by 50%
 			var pipeID = randomPipeID();
-			pipeLines[pipeID].performance = 0.5;
+			pipeRelationships[pipeID].performance = 0.5;
 			pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
 			animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 			pipeLines[pipeID].color = yellow;
@@ -407,7 +407,7 @@
 
 				animations[pipeID].validate(); 
 				pipeLines[pipeID].validate()
-			}, 29000);
+			}, 2900);
 		}
 	}
 	
