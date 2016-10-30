@@ -293,7 +293,7 @@
 			//Increase Flow rate of a random pipe by 10%
 			console.log(dice_1);
 			var pipeID = randomPipeID();
-			pipeRelationships[pipeID].performance = 0.1;
+			pipeRelationships[pipeID].performance = 1.1;
 			pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
 			animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 
@@ -313,7 +313,7 @@
 			console.log(dice_1);
 			//Increase flow rate of a random pipe by 15%
 			var pipeID = randomPipeID();
-			pipeRelationships[pipeID].performance = 0.1;
+			pipeRelationships[pipeID].performance = 1.15;
 			pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
 			animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 
@@ -332,7 +332,7 @@
 			console.log(dice_1);
 			//Decrease flow rate of a pipe by 20%
 			var pipeID = randomPipeID();
-			pipeRelationships[pipeID].performance = 0.1;
+			pipeRelationships[pipeID].performance = .8;
 			pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
 			animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 			animations[pipeID].color = yellow;
@@ -389,7 +389,7 @@
 			console.log(dice_1);
 			//Decrease flow rate of a pipe by 50%
 			var pipeID = randomPipeID();
-			pipeLines[pipeID].performance = 0.1;
+			pipeLines[pipeID].performance = 0.5;
 			pipeLines[pipeID].title= pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance + ' barrels/day';
 			animations[pipeID].animationDuration= normVal/(pipeRelationships[pipeID].flowrate*pipeRelationships[pipeID].performance);
 			pipeLines[pipeID].color = yellow;
